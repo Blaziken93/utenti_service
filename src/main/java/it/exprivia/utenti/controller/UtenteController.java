@@ -3,7 +3,11 @@ package it.exprivia.utenti.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +25,21 @@ public class UtenteController {
     @GetMapping
     public ResponseEntity<List<UtenteDTO>> findAll() {
         return ResponseEntity.ok(utenteService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UtenteDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(utenteService.findById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UtenteDTO> update(@PathVariable Long id, @RequestBody UtenteDTO dto) {
+        return ResponseEntity.ok(utenteService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        utenteService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

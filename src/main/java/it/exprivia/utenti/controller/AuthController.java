@@ -5,6 +5,7 @@ import it.exprivia.utenti.dto.LoginResponse;
 import it.exprivia.utenti.dto.RegisterRequest;
 import it.exprivia.utenti.dto.UtenteDTO;
 import it.exprivia.utenti.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<UtenteDTO> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<UtenteDTO> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 

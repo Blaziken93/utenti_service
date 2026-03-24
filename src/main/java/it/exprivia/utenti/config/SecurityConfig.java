@@ -37,8 +37,11 @@ public class SecurityConfig {
             // STATELESS: il server non ricorda le sessioni, ogni richiesta porta il proprio token
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // TEMPORANEAMENTE: permettiamo TUTTO per diagnosticare il problema
-                .anyRequest().permitAll()
+                .requestMatchers("/api/auth/**").permitAll()               // login e register: liberi
+                .requestMatchers("/api/utenti").hasRole("ADMIN")           // lista utenti: solo ADMIN
+                .requestMatchers("/api/utenti/**").hasRole("ADMIN")        // get/put/delete per id: solo ADMIN
+                .requestMatchers("/api/gruppi/**").hasRole("ADMIN")        // gestione gruppi: solo ADMIN
+                .anyRequest().authenticated()                              // tutto il resto: serve il token
             )
             // Inserisce il filtro JWT prima del filtro standard di Spring
             .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);

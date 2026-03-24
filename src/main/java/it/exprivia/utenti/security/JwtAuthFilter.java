@@ -12,6 +12,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 /**
  * Filtro JWT: viene eseguito una volta per ogni richiesta HTTP in arrivo.
  *
@@ -43,10 +45,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (jwtUtils.isValid(token)) {
                 String email = jwtUtils.extractEmail(token);
+                String ruolo = jwtUtils.extractRuolo(token);
 
-                // Comunica a Spring Security che l'utente è autenticato
+                // Comunica a Spring Security che l'utente è autenticato, con il suo ruolo
                 UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(email, null, List.of());
+                        new UsernamePasswordAuthenticationToken(email, null,
+                                List.of(new SimpleGrantedAuthority("ROLE_" + ruolo)));
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }

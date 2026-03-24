@@ -57,6 +57,13 @@ public class JwtUtils {
     }
 
     /**
+     * Estrae il ruolo dal token.
+     */
+    public String extractRuolo(String token) {
+        return getClaims(token).get("ruolo", String.class);
+    }
+
+    /**
      * Verifica che il token sia valido (firma corretta e non scaduto).
      */
     public boolean isValid(String token) {
