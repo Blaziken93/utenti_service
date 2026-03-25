@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class UtenteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UtenteDTO> update(@PathVariable Long id, @RequestBody UtenteDTO dto) {
+    public ResponseEntity<UtenteDTO> update(@PathVariable Long id, @Valid @RequestBody UtenteDTO dto) {
         return ResponseEntity.ok(utenteService.update(id, dto));
     }
 

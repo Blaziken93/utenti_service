@@ -2,16 +2,16 @@ server:
   port: 8081
 
 jwt:
-  secret: chiaveSuperSegretaPerJWT1234567890abcdef12
-  expiration: 86400000  # 24 ore in millisecondi
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION:86400000}  # 24 ore in millisecondi (default)
 
 spring:
   application:
     name: utenti-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: utenti_user
-    password: utenti123
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
